@@ -1,4 +1,5 @@
 <?php
+
 namespace GoetasWebservices\XML\XSDReader;
 
 use DOMDocument;
@@ -204,7 +205,7 @@ class SchemaReader
 
         $xp = new \DOMXPath($node->ownerDocument);
         $xp->registerNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
-        
+
         if ($xp->query('ancestor::xs:choice', $node)->length) {
             $element->setMin(0);
         }
@@ -277,7 +278,6 @@ class SchemaReader
         $max = $max || $node->getAttribute("maxOccurs") == "unbounded" || $node->getAttribute("maxOccurs") > 1 ? 2 : null;
 
         foreach ($node->childNodes as $childNode) {
-
             switch ($childNode->localName) {
                 case 'choice':
                 case 'sequence':
@@ -467,6 +467,8 @@ class SchemaReader
 
         foreach ($node->childNodes as $childNode) {
             switch ($childNode->localName) {
+                case 'choice':
+                    $this->loadChoice($type, $childNode);
                 case 'restriction':
                     $this->loadRestriction($type, $childNode);
                     break;
@@ -557,6 +559,11 @@ class SchemaReader
                     ]);
             }
         }
+    }
+
+    private function loadChoice(Type $type, DOMElement $node)
+    {
+        $type->setChoice(true);
     }
 
     private static function splitParts(DOMElement $node, $typeName)
@@ -726,8 +733,8 @@ class SchemaReader
 
     /**
      * @param DOMNode $node
-     * @param string  $file
-     * 
+     * @param string $file
+     *
      * @return Schema
      */
     public function readNode(DOMNode $node, $file = 'schema.xsd')
