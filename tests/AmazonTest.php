@@ -24,7 +24,9 @@ class AmazonTest extends BaseTest
         /** @var Element $subElement */
         foreach ($element->getType()->getElements() as $subElement) {
             if ($subElement->getName() == 'ProductData') {
-                $this->assertTrue($subElement->getType()->isChoice());
+                foreach ($subElement->getType()->getElements() as $subSubElement) {
+                    $this->assertTrue($subSubElement->isChoice());
+                }
             }
         }
     }

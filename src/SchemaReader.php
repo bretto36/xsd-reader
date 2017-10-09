@@ -277,6 +277,8 @@ class SchemaReader
     {
         $max = $max || $node->getAttribute("maxOccurs") == "unbounded" || $node->getAttribute("maxOccurs") > 1 ? 2 : null;
 
+        $choice = ($node->localName == 'choice');
+
         foreach ($node->childNodes as $childNode) {
             switch ($childNode->localName) {
                 case 'choice':
@@ -294,6 +296,9 @@ class SchemaReader
                     if ($max) {
                         $element->setMax($max);
                     }
+
+                    $element->setChoice($choice);
+
                     $elementContainer->addElement($element);
                     break;
                 case 'group':
@@ -467,8 +472,6 @@ class SchemaReader
 
         foreach ($node->childNodes as $childNode) {
             switch ($childNode->localName) {
-                case 'choice':
-                    $this->loadChoice($type, $childNode);
                 case 'restriction':
                     $this->loadRestriction($type, $childNode);
                     break;

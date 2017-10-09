@@ -16,6 +16,8 @@ class ElementRef extends Item implements ElementSingle
 
     protected $nil = false;
 
+    protected $choice = false;
+
     public function __construct(ElementDef $element)
     {
         parent::__construct($element->getSchema(), $element->getName());
@@ -78,5 +80,15 @@ class ElementRef extends Item implements ElementSingle
     {
         $this->nil = (boolean) $nil;
         return $this;
+    }
+
+    public function setChoice($value)
+    {
+        $this->choice = $value;
+    }
+
+    public function isChoice()
+    {
+        return $this->choice;
     }
 }
