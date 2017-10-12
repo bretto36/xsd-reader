@@ -14,8 +14,6 @@ class Element extends Item implements ElementItem, ElementSingle
 
     protected $nil = false;
 
-    protected $choice = false;
-
     public function getMin()
     {
         return $this->min;
@@ -58,15 +56,5 @@ class Element extends Item implements ElementItem, ElementSingle
     {
         $this->nil = (boolean) $nil;
         return $this;
-    }
-
-    public function setChoice($value)
-    {
-        $this->choice = $value;
-    }
-
-    public function isChoice()
-    {
-        return $this->choice;
     }
 }

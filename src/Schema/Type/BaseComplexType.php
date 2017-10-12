@@ -10,6 +10,8 @@ abstract class BaseComplexType extends Type implements AttributeContainer
 {
     protected $attributes = array();
 
+    protected $choice = false;
+
     public function addAttribute(AttributeItem $attribute)
     {
         $this->attributes[] = $attribute;
@@ -19,5 +21,15 @@ abstract class BaseComplexType extends Type implements AttributeContainer
     public function getAttributes()
     {
         return $this->attributes;
+    }
+
+    public function setChoice($value)
+    {
+        $this->choice = $value;
+    }
+
+    public function isChoice()
+    {
+        return $this->choice;
     }
 }
